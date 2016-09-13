@@ -37,9 +37,9 @@
      OAuth2 URL: /oauth/token   的处理与配置
      一般使用时这里不需要修改, 直接使用即可
     -->
-    <http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="oauth2AuthenticationManager"
+    <http pattern="/oauth2/token" create-session="stateless" authentication-manager-ref="oauth2AuthenticationManager"
           entry-point-ref="oauth2AuthenticationEntryPoint" use-expressions="false">
-        <intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY"/>
+        <intercept-url pattern="/oauth2/token" access="IS_AUTHENTICATED_FULLY"/>
         <anonymous enabled="false"/>
         <http-basic entry-point-ref="oauth2AuthenticationEntryPoint"/>
 
@@ -55,6 +55,7 @@
     <beans:bean id="clientCredentialsTokenEndpointFilter"
                 class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter">
         <beans:property name="authenticationManager" ref="oauth2AuthenticationManager"/>
+        <beans:property name="filterProcessesUrl" value="/oauth2/token"/>
     </beans:bean>
 
 
@@ -180,11 +181,12 @@
     <oauth2:authorization-server client-details-service-ref="appService" token-services-ref="tokenServices"
                                  user-approval-handler-ref="oauthUserApprovalHandler"
                                  user-approval-page="oauth_approval"
-                                 error-page="oauth_error">
+                                 error-page="oauth_error" token-endpoint-url="/oauth2/token" >
+        <!--authorization-endpoint-url="/oauth2/auth"-->
         <oauth2:authorization-code authorization-code-services-ref="jdbcAuthorizationCodeServices"/>
         <oauth2:implicit/>
         <oauth2:refresh-token/>
-        <oauth2:client-credentials/>
+        <oauth2:client-credentials />
         <oauth2:password/>
     </oauth2:authorization-server>
 

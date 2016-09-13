@@ -113,7 +113,14 @@ null,null, now(), 0, 0);
                                 </select>
                             </div>
                         </div>
+                        <div class="well well-sm">
+                            <span class="text-muted">get请求</span>
+                            <br/>
 
+                            <div class="text-primary">
+                                credentials_access_token?clientId={{clientId}}&clientSecret={{clientSecret}}&grantType={{grantType}}&scope={{scope}}&accessTokenUri=${accessTokenUri}
+                            </div>
+                        </div>
                     </div>
                     <br/>
                     <br/>
@@ -170,7 +177,7 @@ null,null, now(), 0, 0);
 
         $scope.getAccessToken = function () {
             var uri = "credentials_access_token?clientId=" + $scope.clientId + "&clientSecret=" + $scope.clientSecret + "&grantType=" + $scope.grantType + "&scope=" + $scope.scope
-                    + "&accessTokenUri=" + encodeURIComponent("${accessTokenUri}");
+                    + "&accessTokenUri=" + encodeURIComponent("${accessTokenUri}")+"?t="+(new Date().getTime());
 
             $http.get(uri).success(function (data) {
                 $scope.accessToken = data.accessToken;

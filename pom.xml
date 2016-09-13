@@ -9,6 +9,7 @@
     <modules>
         <module>oauth-server</module>
         <module>oauth-client</module>
+        <module>spring-security-oauth2</module>
     </modules>
     <distributionManagement>
         <repository>
@@ -20,11 +21,6 @@
             <url>http://192.168.52.125:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-    <dependencyManagement>
-        <dependencies>
-
-        </dependencies>
-    </dependencyManagement>
     <build>
         <plugins>
             <plugin>

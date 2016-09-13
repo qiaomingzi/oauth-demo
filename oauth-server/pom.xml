@@ -34,136 +34,6 @@
         <jdbc.execute.skip>false</jdbc.execute.skip>
         <test.skip>false</test.skip>
     </properties>
-
-    <developers>
-        <developer>
-            <name>shengzhao</name>
-            <email>shengzhao@shengzhaoli.com</email>
-        </developer>
-        <!--more developer-->
-    </developers>
-
-
-    <build>
-        <finalName>spring-oauth-server</finalName>
-
-        <plugins>
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>-->
-
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <warSourceExcludes>*/classes/spring-oauth-server.properties</warSourceExcludes>
-                    <packagingExcludes>*/classes/spring-oauth-server.properties</packagingExcludes>
-                    <archive>
-                        <addMavenDescriptor>false</addMavenDescriptor>
-                        <manifestEntries>
-                            <Implementation-BuildNumber>${project.version}</Implementation-BuildNumber>
-                            <Implementation-Title>${project.name}</Implementation-Title>
-                            <Implementation-Version>${project.version}</Implementation-Version>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>sql-maven-plugin</artifactId>
-                <version>1.4</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.35</version>
-                    </dependency>
-                </dependencies>
-
-                <configuration>
-                    <driver>${jdbc.driver}</driver>
-                    <url>${jdbc.url}</url>
-                    <username>${jdbc.user}</username>
-                    <password>${jdbc.pass}</password>
-                    <skip>${jdbc.execute.skip}</skip>
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <id>init db</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                        <configuration>
-                            <url>${jdbc.url}</url>
-                            <autocommit>true</autocommit>
-                            <srcFiles>
-                                <srcFile>others/database/initial_db.ddl</srcFile>
-                                <srcFile>others/database/oauth.ddl</srcFile>
-                            </srcFiles>
-                            <onError>continue</onError>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <skip>${test.skip}</skip>
-                    <forkMode>none</forkMode>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                    <systemProperties>
-                        <property>
-                            <name>jdbc.url</name>
-                            <value>${jdbc.url}</value>
-                        </property>
-                        <property>
-                            <name>jdbc.username</name>
-                            <value>${jdbc.user}</value>
-                        </property>
-                        <property>
-                            <name>jdbc.password</name>
-                            <value>${jdbc.pass}</value>
-                        </property>
-                    </systemProperties>
-                </configuration>
-            </plugin>
-        </plugins>
-
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
-                <excludes>
-                    <!--exclude file list-->
-                    <!--<exclude>spring-oauth-server.properties</exclude>-->
-                </excludes>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
-            </testResource>
-        </testResources>
-    </build>
-
     <dependencies>
         <!-- provided dependency -->
         <dependency>
@@ -292,10 +162,15 @@
             <version>${spring.security.version}</version>
         </dependency>
 
-        <dependency>
+       <!-- <dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
             <version>${spring.security.oauth.version}</version>
+        </dependency>-->
+        <dependency>
+            <groupId>cn.ffcs.sqopen</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>2.0.11.RELEASE</version>
         </dependency>
 
         <!--json-->
@@ -364,6 +239,129 @@
             </exclusions>
         </dependency>
     </dependencies>
+    <build>
+        <finalName>spring-oauth-server</finalName>
 
+        <plugins>
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>-->
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <warSourceExcludes>*/classes/spring-oauth-server.properties</warSourceExcludes>
+                    <packagingExcludes>*/classes/spring-oauth-server.properties</packagingExcludes>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifestEntries>
+                            <Implementation-BuildNumber>${project.version}</Implementation-BuildNumber>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
 
+           <!-- <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.4</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.35</version>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <driver>${jdbc.driver}</driver>
+                    <url>${jdbc.url}</url>
+                    <username>${jdbc.user}</username>
+                    <password>${jdbc.pass}</password>
+                    <skip>${jdbc.execute.skip}</skip>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>init db</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>${jdbc.url}</url>
+                            <autocommit>true</autocommit>
+                            <srcFiles>
+                                <srcFile>others/database/initial_db.ddl</srcFile>
+                                <srcFile>others/database/oauth.ddl</srcFile>
+                            </srcFiles>
+                            <onError>continue</onError>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <skip>${test.skip}</skip>
+                    <forkMode>none</forkMode>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <systemProperties>
+                        <property>
+                            <name>jdbc.url</name>
+                            <value>${jdbc.url}</value>
+                        </property>
+                        <property>
+                            <name>jdbc.username</name>
+                            <value>${jdbc.user}</value>
+                        </property>
+                        <property>
+                            <name>jdbc.password</name>
+                            <value>${jdbc.pass}</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+            -->
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <excludes>
+                    <!--exclude file list-->
+                    <!--<exclude>spring-oauth-server.properties</exclude>-->
+                </excludes>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </testResource>
+        </testResources>
+    </build>
 </project>

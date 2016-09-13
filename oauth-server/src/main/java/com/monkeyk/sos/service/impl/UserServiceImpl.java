@@ -43,7 +43,9 @@ public class UserServiceImpl implements UserService {
 
         if (authentication instanceof OAuth2Authentication &&
                 (principal instanceof String || principal instanceof org.springframework.security.core.userdetails.User)) {
-            return loadOauthUserJsonDto((OAuth2Authentication) authentication);
+            //loadOauthUserJsonDto((OAuth2Authentication) authentication);
+            //authentication.getDetails();
+            return new User();
         } else {
             final OpenUserDetails userDetails = (OpenUserDetails) principal;
             User user = userRepository.findByUsername(userDetails.getUsername());

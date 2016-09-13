@@ -40,7 +40,7 @@ public class AppRepositoryJdbc implements AppRepository {
 
     @Override
     public List<Application> findAllOauthClientDetails() {
-        final String sql = " select * from t_open_application where  status='001 order by create_time desc ";
+        final String sql = " select * from t_open_application where  status='001' order by create_time desc ";
         return this.jdbcTemplate.query(sql, applicationRowMapper);
     }
 
