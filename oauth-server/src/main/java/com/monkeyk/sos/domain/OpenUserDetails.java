@@ -36,16 +36,21 @@ public class OpenUserDetails implements UserDetails {
         MOBILE
     }
     private void initialAuthorities() {
-        //Default, everyone have it
+        //所有人都该权限
         this.grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + Privilege.USER.name()));
-        //default user have all privileges
-        this.grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + Privilege.UNITY.name()));
-        this.grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + Privilege.MOBILE.name()));
-        Integer[] roleIds = user.getRoleIds();
+        /*Integer[] roleIds = user.getRoleIds();
         if (roleIds != null) {
             for (Integer privilege : roleIds) {
                 this.grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + privilege));
             }
+        }*/
+        /*if(user.getAccount().equalsIgnoreCase("admin")){      //default user have all privileges
+            this.grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + Privilege.UNITY.name()));
+            this.grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + Privilege.MOBILE.name()));
+        }else */ if(user.getAccount().equalsIgnoreCase("mobile")){
+            this.grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + Privilege.MOBILE.name()));
+        }else  if(user.getAccount().equalsIgnoreCase("unity")){
+            this.grantedAuthorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + Privilege.UNITY.name()));
         }
     }
 

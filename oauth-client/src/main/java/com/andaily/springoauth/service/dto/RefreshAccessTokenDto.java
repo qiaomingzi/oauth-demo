@@ -67,7 +67,7 @@ public class RefreshAccessTokenDto implements Serializable {
     * http://localhost:8080/spring-oauth-server/oauth/token?client_id=mobile-client&client_secret=mobile&grant_type=refresh_token&refresh_token=b36f4978-a172-4aa8-af89-60f58abe3ba1
     * */
     public Map<String, String> getRefreshTokenParams() {
-        Map<String, String> map = new HashMap();
+        Map<String, String> map = new HashMap<String, String>();
         map.put("client_id", clientId);
 
         map.put("client_secret", clientSecret);

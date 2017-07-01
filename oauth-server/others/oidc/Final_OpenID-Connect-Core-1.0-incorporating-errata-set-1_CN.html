@@ -2635,22 +2635,19 @@
 <a name="rfc.section.3.1.2.4"></a>
 
 <h3>3.1.2.4.&nbsp;
-    Authorization Server Obtains End-User Consent/Authorization</h3>
+    授权服务器获取最终用户(End-User)同意/授权</h3>
 
 <p>
-    Once the End-User is authenticated, the Authorization Server MUST
-    obtain an authorization decision before releasing information
-    to the Relying Party.
-    When permitted by the request parameters used,
-    this MAY be done through an interactive dialogue with the End-User
-    that makes it clear what is being consented to
-    or by establishing consent via conditions for processing the request or
-    other means (for example, via previous administrative consent).
-    Sections <a class="info" href="#IDToken">2<span> (</span><span
-        class="info">ID Token</span><span>)</span></a> and
+    一旦最终用户(End-User)通过认证, 授权服务器必须(MUST)在给
+    信任方(Relying Party)响应(releasing)信息前获取一个最终用户授权决定.
+    当允许的请求参数使用时,
+    或许(MAY)是通过一个与最终用户的交互式对话(interactive dialogue),
+    使它明确什么是同意或通过建立同意,通过条件处理的请求
+    或其他方式(如通过之前的管理(administrative)同意).
+    章节 <a class="info" href="#IDToken">2<span> (</span><span
+        class="info">ID Token</span><span>)</span></a> 和
     <a class="info" href="#UserInfo">5.3<span> (</span><span
-            class="info">UserInfo Endpoint</span><span>)</span></a> describe
-    information release mechanisms.
+            class="info">UserInfo Endpoint</span><span>)</span></a> 描述相关信息机制.
 
 </p>
 <a name="AuthResponse"></a><br>
@@ -2665,33 +2662,28 @@
 <a name="rfc.section.3.1.2.5"></a>
 
 <h3>3.1.2.5.&nbsp;
-    Successful Authentication Response</h3>
+    成功的认证响应</h3>
 
 <p>
-    An Authentication Response is an OAuth 2.0 Authorization Response
-    message returned from the
-    OP's Authorization Endpoint in response to the Authorization Request
-    message sent by the RP.
-
+    一个认证响应(An Authentication Response)是一个OAuth2.0的授权响应信息,
+    是从OP的授权端点(Authorization Endpoint)响应并返回从RP发送的
+    授权请求(Authorization Request)消息.
 </p>
 
 <p>
-    When using the Authorization Code Flow, the Authorization Response
-    MUST return the parameters defined in Section 4.1.2 of
+    在使用授权码流程时, 认证响应必须(MUST)返回的参数是定义在
     <a class="info" href="#RFC6749">OAuth 2.0<span> (</span><span
             class="info">Hardt, D., “The OAuth 2.0 Authorization Framework,” October&nbsp;2012.</span><span>)</span></a>
     [RFC6749]
-    by adding them as query parameters to the
-    <tt>redirect_uri</tt> specified in the Authorization Request
-    using the <tt>application/x-www-form-urlencoded</tt> format,
-    unless a different Response Mode was specified.
+    协议4.1.2章节中的并在授权请求时通过<tt>redirect_uri</tt> 指定添加的查询参数
+    且使用 <tt>application/x-www-form-urlencoded</tt>格式,
+    除非指定了其他的响应模式(Response Mode).
 
 </p>
 
 <p>
-    The following is a non-normative example
-    successful response using this flow
-    (with line wraps within values for display purposes only):
+    下面是一个非规范性(non-normative)的,
+    在该流程中成功响应的示例(仅为了更好的显示使用了换行):
 
 </p>
 
@@ -2702,8 +2694,7 @@
 </pre>
 </div>
 <p>
-    For implementation notes on the contents of
-    the Authorization Code, see <a class="info" href="#CodeNotes">Section&nbsp;15.5.1<span> (</span><span
+    有关授权码实现的注意事项内容,请参考 <a class="info" href="#CodeNotes">15.5.1 章节<span> (</span><span
         class="info">Authorization Code Implementation Notes</span><span>)</span></a>.
 
 </p>
@@ -2719,41 +2710,37 @@
 <a name="rfc.section.3.1.2.6"></a>
 
 <h3>3.1.2.6.&nbsp;
-    Authentication Error Response</h3>
+    错误的认证响应</h3>
 
 <p>
-    An Authentication Error Response is an OAuth 2.0 Authorization Error Response
-    message returned from the
-    OP's Authorization Endpoint in response to the Authorization Request
-    message sent by the RP.
+    一个错误的认证响应是一个OAuth2.0 错误授权响应信息反馈,
+    该响应是从OP的授权端点(Authorization Endpoint)到RP发起的授权请求(Authorization Request)信息
 
 </p>
 
 <p>
-    If the End-User denies the request or the End-User authentication
-    fails, the OP (Authorization Server) informs the RP (Client)
-    by using the Error Response parameters defined in
-    Section 4.1.2.1 of <a class="info" href="#RFC6749">OAuth
+    如果最终用户拒绝了请求或最终用户认证失败,
+    OP(授权服务器)将使用定义在
+    <a class="info" href="#RFC6749">OAuth
     2.0<span> (</span><span
             class="info">Hardt, D., “The OAuth 2.0 Authorization Framework,” October&nbsp;2012.</span><span>)</span></a>
-    [RFC6749].
-    (HTTP errors unrelated to RFC 6749 are returned to the User Agent using the
-    appropriate HTTP status code.)
+    [RFC6749] 4.1.2.1章节
+    中的错误响应(Error Response)参数通知RP(客户端).
+    (HTTP错误与RFC 6749无关的将使用合适的HTTP状态码返回给用户代理(User Agent).)
 
 </p>
 
 <p>
-    Unless the Redirection URI is invalid,
-    the Authorization Server returns the Client to
-    the Redirection URI specified in the Authorization Request
-    with the appropriate error and state parameters.
-    Other parameters SHOULD NOT be returned.
+    除非重定向URI(Redirection URI)是无效的,
+    否则授权服务器(Authorization Server)将使用在授权请求(Authorization Request)中指定的重定向URI返回给客户端,
+    包括适当的错误与状态参数.
+    其他的参数可以不用(SHOULD NOT)返回.
 
 </p>
 
 <p>
-    In addition to the error codes defined in Section 4.1.2.1 of
-    OAuth 2.0, this specification also defines the following error codes:
+    除了定义在OAuth2.0协议4.1.2.1章节中的错误码以外,
+    本协议额外定义了以下错误码:
 
 </p>
 
@@ -2828,30 +2815,25 @@
         <dt>request_not_supported</dt>
         <dd>
 
-            The OP does not support use of the
-            <tt>request</tt> parameter
-            defined in <a class="info" href="#JWTRequests">Section&nbsp;6<span> (</span><span
-                class="info">Passing Request Parameters as JWTs</span><span>)</span></a>.
-
+            OP不支持使用定义在
+            <a class="info" href="#JWTRequests">章节&nbsp;6<span> (</span><span
+                class="info">Passing Request Parameters as JWTs</span><span>)</span></a>
+            中的 <tt>request</tt> 参数
         </dd>
         <dt>request_uri_not_supported</dt>
         <dd>
-
-            The OP does not support use of the
-            <tt>request_uri</tt> parameter
-            defined in <a class="info" href="#JWTRequests">Section&nbsp;6<span> (</span><span
-                class="info">Passing Request Parameters as JWTs</span><span>)</span></a>.
-
+            OP不支持使用定义在
+            <a class="info" href="#JWTRequests">章节&nbsp;6<span> (</span><span
+                class="info">Passing Request Parameters as JWTs</span><span>)</span></a>
+            中的 <tt>request_uri</tt> 参数
         </dd>
         <dt>registration_not_supported</dt>
         <dd>
-
-            The OP does not support use of the
-            <tt>registration</tt> parameter
-            defined in <a class="info"
-                          href="#RegistrationParameter">Section&nbsp;7.2.1<span> (</span><span
+            OP不支持使用定义在
+             <a class="info"
+                          href="#RegistrationParameter">章节&nbsp;7.2.1<span> (</span><span
                 class="info">Providing Information with the "registration" Request Parameter</span><span>)</span></a>.
-
+            中的 <tt>registration</tt> 参数
         </dd>
     </dl>
 </blockquote>
@@ -2860,7 +2842,7 @@
 </p>
 
 <p>
-    The error response parameters are the following:
+    错误(error)响应参数如下:
 
 </p>
 <blockquote class="text">
@@ -2868,30 +2850,29 @@
         <dt>error</dt>
         <dd>
 
-            REQUIRED. Error code.
+            必须的(REQUIRED). 错误码.
 
         </dd>
         <dt>error_description</dt>
         <dd>
 
-            OPTIONAL. Human-readable ASCII
-            encoded text description of the error.
+            可选的(OPTIONAL). 人类可读的使用ASCII编码的
+            对错误的文字描述信息
 
         </dd>
         <dt>error_uri</dt>
         <dd>
 
-            OPTIONAL. URI of a web page that
-            includes additional information about the error.
+            可选的(OPTIONAL). 一个包含关于错误的
+            更多额外信息的万维网URI页面.
 
         </dd>
         <dt>state</dt>
         <dd>
 
-            OAuth 2.0 state value.
-            REQUIRED if the Authorization Request
-            included the <tt>state</tt> parameter. Set
-            to the value received from the Client.
+            OAuth 2.0 状态值.
+            如果授权请求包含参数<tt>state</tt>则是必须的(REQUIRED).
+            设置从客户端收到的值.
 
         </dd>
     </dl>
@@ -2901,9 +2882,9 @@
 </p>
 
 <p>
-    When using the Authorization Code Flow, the error response
-    parameters are added to the query component of the Redirection URI,
-    unless a different Response Mode was specified.
+    当使用授权码流程(Authorization Code Flow)时,
+    除非指定了一个不同的响应模式(Response Mode),
+    否则错误响应参数将添加为重定向URI(Redirection URI)的查询组件.
 
 </p>
 
@@ -2912,9 +2893,7 @@
 </p>
 
 <p>
-    The following is a non-normative example
-    error response using this flow
-    (with line wraps within values for display purposes only):
+    下面是一个非规范性(non-normative)的, 在该流程中错误响应时的示例(换行为了更好的显示使用):
 
 </p>
 
@@ -2940,12 +2919,12 @@
 <a name="rfc.section.3.1.2.7"></a>
 
 <h3>3.1.2.7.&nbsp;
-    Authentication Response Validation</h3>
+    认证响应的验证</h3>
 
 <p>
-    When using the Authorization Code Flow,
-    the Client MUST validate the response according to RFC 6749,
-    especially Sections 4.1.2 and 10.12.
+    当使用授权码流程(Authorization Code Flow)时,
+    客户端必须根据RFC 6749协议验证响应,
+    特别是4.1.2章节与10.12章节中的内容.
 
 </p>
 <a name="TokenEndpoint"></a><br>

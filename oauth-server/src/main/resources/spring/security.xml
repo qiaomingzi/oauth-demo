@@ -70,7 +70,7 @@
           access-decision-manager-ref="oauth2AccessDecisionManager" use-expressions="false">
         <anonymous enabled="false"/>
 
-        <intercept-url pattern="/unity/**" access="ROLE_UNITY,ROLE_USER,SCOPE_READ"/>
+        <intercept-url pattern="/unity/**" access="ROLE_UNITY,SCOPE_READ"/>
 
         <custom-filter ref="unityResourceServer" before="PRE_AUTH_FILTER"/>
         <access-denied-handler ref="oauth2AccessDeniedHandler"/>
@@ -101,6 +101,7 @@
         <anonymous/>
         <csrf disabled="true"/>
     </http>
+
 
     <!--
         每一个资源(resource)的定义, resource-id必须唯一, OauthClientDetails中的resourceIds属性的值由此来的,
@@ -181,7 +182,7 @@
     <oauth2:authorization-server client-details-service-ref="appService" token-services-ref="tokenServices"
                                  user-approval-handler-ref="oauthUserApprovalHandler"
                                  user-approval-page="oauth_approval"
-                                 error-page="oauth_error" token-endpoint-url="/oauth2/token" >
+                                 error-page="oauth_error" token-endpoint-url="/oauth2/token" authorization-endpoint-url="/oauth2/authorize">
         <!--authorization-endpoint-url="/oauth2/auth"-->
         <oauth2:authorization-code authorization-code-services-ref="jdbcAuthorizationCodeServices"/>
         <oauth2:implicit/>
@@ -217,7 +218,6 @@
             </beans:list>
         </beans:constructor-arg>
     </beans:bean>
-
 
     <beans:bean id="oauth2AccessDeniedHandler"
                 class="org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler"/>

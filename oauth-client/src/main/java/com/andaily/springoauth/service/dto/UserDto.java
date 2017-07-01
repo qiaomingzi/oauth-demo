@@ -16,10 +16,11 @@ public class UserDto extends AbstractOauthDto {
     private String email;
     private String guid;
 
-    private String phone;
+    private String phone;                 
     private String username;
 
-    private List<String> privileges = new ArrayList();
+
+    private List<String> privileges = new ArrayList<String>();
 
 
     public UserDto() {

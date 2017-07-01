@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         if (user == null || user.getStatus() == 0) {
             throw new UsernameNotFoundException("Not found any user for username[" + username + "]");
         }
-
+         user.setPassword(user.getPassword().toLowerCase());
         return new OpenUserDetails(user);
     }
     @Override
@@ -43,13 +43,12 @@ public class UserServiceImpl implements UserService {
 
         if (authentication instanceof OAuth2Authentication &&
                 (principal instanceof String || principal instanceof org.springframework.security.core.userdetails.User)) {
-            //loadOauthUserJsonDto((OAuth2Authentication) authentication);
-            //authentication.getDetails();
-            return new User();
+            User user = loadOauthUserJsonDto((OAuth2Authentication) authentication);
+            authentication.getDetails();
+            return user;
         } else {
             final OpenUserDetails userDetails = (OpenUserDetails) principal;
             User user = userRepository.findByUsername(userDetails.getUsername());
-
             return user;
         }
     }
@@ -77,12 +76,9 @@ public class UserServiceImpl implements UserService {
         user.setAccount(oAuth2Authentication.getName());
 
         final Collection<GrantedAuthority> authorities = oAuth2Authentication.getAuthorities();
-        Integer[] roles = new Integer[authorities.size()];
-        int i = 0 ;
         for (GrantedAuthority authority : authorities) {
-            roles[i] = Integer.parseInt(authority.getAuthority());
+            user.getRoleIds().add(authority.getAuthority());
         }
-        user.setRoleIds(roles);
         return user;
     }
 }

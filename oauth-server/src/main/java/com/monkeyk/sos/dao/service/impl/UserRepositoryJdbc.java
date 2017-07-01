@@ -20,16 +20,15 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 /**
@@ -46,49 +45,52 @@ public class UserRepositoryJdbc implements UserRepository {
 
 
     private Integer[] findPrivileges(int userId) {
-        final String sql = " select role_id from t_sm_user_role where user_id = ? ";
+        final String sql = " select role_id from t_open_user where user_id = ? ";
         final List<Integer> strings = this.jdbcTemplate.queryForList(sql, new Object[]{userId}, Integer.class);
         return strings.toArray(new Integer[strings.size()]);
     }
 
     @Override
     public void saveUser(final User user) {
-        final String sql = " insert into t_sm_user(ACCOUNT,PASSWORD,TEL,EMAIL,NICKNAME,DESCRIPT," +
+        final String sql = " insert into t_open_user(ACCOUNT,PASSWORD,TEL,EMAIL,NICKNAME,DESCRIPT," +
                 "ORG_ID,STATUS,CREATE_TIME,CREATE_USER,PIC_PATH,USER_TYPE) values (?,?,?,?,?,?,?,?,?,?,?,?) ";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        this.jdbcTemplate.update(sql, new PreparedStatementSetter() {
+        this.jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
-            public void setValues(PreparedStatement ps) throws SQLException {
+            public PreparedStatement createPreparedStatement(Connection con)
+                    throws SQLException {
+                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, user.getAccount());
                 ps.setString(2, user.getPassword());
                 ps.setString(3, user.getTel());
                 ps.setString(4, user.getEmail());
                 ps.setString(5, user.getNickname());
                 ps.setString(6, user.getDescript());
-                ps.setInt(7, user.getOrgId());
-                ps.setInt(8, 1);//status
+                ps.setObject(7, user.getOrgId());
+                ps.setInt(8, 2);//status
                 ps.setObject(9, user.getCreateTime());
-                ps.setInt(10, user.getCreateUser());//CREATE_USER
+                ps.setObject(10, user.getCreateUser());//CREATE_USER
                 ps.setString(11, user.getPicPath());//PIC_PATH
-                ps.setInt(12, user.getUserType());//USER_TYPE
+                ps.setObject(12, 1);//USER_TYPE
+                return ps;
             }
         },keyHolder);
         final int userId = keyHolder.getKey().intValue();
         user.setId(userId);
         //insert privileges
-        this.jdbcTemplate.update("insert into t_sm_user_role(user_id, role_id) values (?,?)", new PreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement ps) throws SQLException {
-                ps.setInt(1, userId);
-                ps.setInt(2, 2842513);
-            }
-        });
+//        this.jdbcTemplate.update("insert into t_open_user_role(user_id, role_id) values (?,?)", new PreparedStatementSetter() {
+//            @Override
+//            public void setValues(PreparedStatement ps) throws SQLException {
+//                ps.setInt(1, userId);
+//                ps.setInt(2, 2842513);
+//            }
+//        });
     }
 
     @Override
     @CacheEvict(value = USER_CACHE, key = "#user.getAccount()")
     public void updateUser(final User user) {
-        final String sql = " update t_sm_user set PASSWORD = ?, TEL = ?, EMAIL = ?,NICKNAME = ?," +
+        final String sql = " update t_open_user set PASSWORD = ?, TEL = ?, EMAIL = ?,NICKNAME = ?," +
                 " DESCRIPT=?,ORG_ID=?,PIC_PATH=? where id = ? ";
 
 
@@ -111,22 +113,20 @@ public class UserRepositoryJdbc implements UserRepository {
     @Override
     @Cacheable(value = USER_CACHE, key = "#account")
     public User findByUsername(String account) {
-        final String sql = " select * from t_sm_user where account = ? and status = 1";
+        final String sql = " select * from t_open_user where account = ? and status = 2";
         final List<User> list = this.jdbcTemplate.query(sql, new Object[]{account}, userRowMapper);
 
         User user = null;
         if (!list.isEmpty()) {
             user = list.get(0);
-            user.setRoleIds(findPrivileges(user.getId()));
+            //user.setRoleIds(findPrivileges(user.getId()));
         }
-
         return user;
     }
 
     @Override
     public List<User> findUsersByUsername(String account) {
-        String sql = " select a.* from t_sm_user a join t_sm_user_role b on(a.ID=b.USER_ID) " +
-                "where a.status = 1 and b.ROLE_ID=2842513 ";
+        String sql = " select a.* from t_open_user a  where a.status = 2  ";
         Object[] params = new Object[]{};
         if (StringUtils.isNotEmpty(account)) {
             sql += " and account like ?";
@@ -135,9 +135,9 @@ public class UserRepositoryJdbc implements UserRepository {
         sql += " order by create_time desc ";
 
         final List<User> list = this.jdbcTemplate.query(sql, params, userRowMapper);
-        for (User user : list) {
-            user.setRoleIds(findPrivileges(user.getId()));
-        }
+//        for (User user : list) {
+//            user.setRoleIds(findPrivileges(user.getId()));
+//        }
         return list;
     }
 }

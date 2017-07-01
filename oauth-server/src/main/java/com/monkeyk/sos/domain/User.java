@@ -2,7 +2,9 @@ package com.monkeyk.sos.domain;
 
 // default package
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class User  implements java.io.Serializable {
@@ -23,7 +25,7 @@ public class User  implements java.io.Serializable {
 	private Integer status = 1;
 	private Date createTime = new Date();
 	private Integer createUser;
-	private Integer[] roleIds;
+	private List<String> roleIds = new ArrayList<String>();
 	private String picPath;
 		
 	private Long certId;		//证件ID
@@ -140,15 +142,15 @@ public class User  implements java.io.Serializable {
         this.createUser = createUser;
     }
 
-	public Integer[] getRoleIds() {
+	public List<String> getRoleIds() {
 		return roleIds;
 	}
 
 
-	public void setRoleIds(Integer[] roleIds) {
+	public void setRoleIds(List<String> roleIds) {
 		this.roleIds = roleIds;
 	}
-	
+
 	public String getPicPath() {
 		return picPath;
 	}

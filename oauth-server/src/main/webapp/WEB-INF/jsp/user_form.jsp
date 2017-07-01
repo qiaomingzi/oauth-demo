@@ -38,20 +38,20 @@
             <p class="help-block">Password, required.</p>
         </div>
     </div>
-   <%-- <div class="form-group">
-        <label class="col-sm-2 control-label">roles<em class="text-danger">*</em></label>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Privileges<em class="text-danger">*</em></label>
 
         <div class="col-sm-10">
             <label class="checkbox-inline">
-                <form:checkbox path="privileges" value="MOBILE"/> MOBILE
+                <form:checkbox path="roleIds" value="MOBILE"/> MOBILE
             </label>
             <label class="checkbox-inline">
-                <form:checkbox path="privileges" value="UNITY"/> UNITY
+                <form:checkbox path="roleIds" value="UNITY"/> UNITY
             </label>
 
             <p class="help-block">Select role(s).</p>
         </div>
-    </div>--%>
+    </div>
 
     <div class="form-group">
         <label class="col-sm-2 control-label">tel</label>

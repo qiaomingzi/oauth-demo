@@ -68,6 +68,6 @@ public class UserRepositoryJdbcTest extends AbstractRepositoryTest {
     public void testPrivilege() {
         User user = userRepository.findByUsername("oood");
         assertNotNull(user);
-        assertEquals(user.getRoleIds().length, 1);
+        assertEquals(user.getRoleIds().size(), 1);
     }
 }

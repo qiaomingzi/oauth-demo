@@ -20,7 +20,7 @@
 <p>
     <a href="${contextPath}/login.jsp">Login</a>
     &nbsp;|&nbsp;
-    <a href="${contextPath}/logout.do">Logout</a>
+    <a href="${contextPath}/logout.do">Logout ${request.User.account}</a>
 </p>
 
 <div>

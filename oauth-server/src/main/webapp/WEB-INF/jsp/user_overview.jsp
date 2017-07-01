@@ -30,6 +30,7 @@
     <thead>
     <tr>
         <th>account</th>
+        <th>roles</th>
         <th>tel</th>
         <th>Email</th>
         <th>CreateTime</th>
@@ -39,6 +40,7 @@
     <c:forEach items="${overviewDto}" var="user">
         <tr>
             <td>${user.account}</td>
+            <td>${user.roleIds}</td>
             <td>${user.tel}</td>
             <td>${user.email}</td>
             <td>${user.createTime}</td>

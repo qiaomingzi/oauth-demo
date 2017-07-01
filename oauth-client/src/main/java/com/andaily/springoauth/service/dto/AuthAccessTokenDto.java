@@ -116,7 +116,7 @@ public class AuthAccessTokenDto implements Serializable {
     * http://localhost:8080/oauth/token?client_id=unity-client&client_secret=unity&grant_type=authorization_code&code=zLl170&redirect_uri=http%3a%2f%2flocalhost%3a8080%2funity%2fdashboard.htm
     * */
     public Map<String, String> getAuthCodeParams() {
-        Map<String, String> map = new HashMap();
+        Map<String, String> map = new HashMap<String, String>();
         map.put("client_id", clientId);
         map.put("client_secret", clientSecret);
         map.put("grant_type", grantType);

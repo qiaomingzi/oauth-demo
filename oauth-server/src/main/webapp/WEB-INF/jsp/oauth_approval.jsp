@@ -14,12 +14,12 @@
 
 <p>Do you authorize '${authorizationRequest.clientId}' to access your protected resources?</p>
 
-<form id='confirmationForm' name='confirmationForm' action='${pageContext.request.contextPath}/oauth/authorize'
+<form id='confirmationForm' name='confirmationForm' action='${pageContext.request.contextPath}/oauth2/authorize'
       method='post'>
     <input name='user_oauth_approval' value='true' type='hidden'/>
     <label> <input name='authorize' value='授权' type='submit' class="btn btn-success"/></label>
 </form>
-<form id='denialForm' name='denialForm' action='${pageContext.request.contextPath}/oauth/authorize' method='post'>
+<form id='denialForm' name='denialForm' action='${pageContext.request.contextPath}/oauth2/authorize' method='post'>
     <input name='user_oauth_approval' value='false' type='hidden'/>
     <label><input name='deny' value='拒绝' type='submit' class="btn btn-warning"/></label>
 </form>

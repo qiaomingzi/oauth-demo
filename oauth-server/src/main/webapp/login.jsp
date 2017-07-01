@@ -21,7 +21,7 @@
                 <label for="username" class="col-sm-3 control-label">Username</label>
 
                 <div class="col-sm-9">
-                    <input type="text" id="username" name="username" value="admin" placeholder="Type username"
+                    <input type="text" id="username" name="username" value="" placeholder="Type username"
                            required="required" class="form-control"/>
                 </div>
             </div>
@@ -30,16 +30,16 @@
                 <label for="password" class="col-sm-3 control-label">Password</label>
 
                 <div class="col-sm-9">
-                    <input type="password" name="password" id="password" value="q1w2e3r4" placeholder="Type password"
+                    <input type="password" name="password" id="password" value="" placeholder="Type password"
                            required="required" class="form-control"/>
                 </div>
             </div>
             <input type="submit" value="Login" class="btn btn-primary"/>
             <a href="${pageContext.request.contextPath}">Back to Home</a>&nbsp;
             <%--Login error--%>
-            <c:if test="${param.authorization_error eq 2}"><span
+            <c:if test="${param.authorization_error eq '2'}"><span
                     class="label label-danger">Access denied !!!</span></c:if>
-            <c:if test="${param.authentication_error eq 1}"><span
+            <c:if test="${param.authentication_error eq '1'}"><span
                     class="label label-danger">Authentication Failure</span></c:if>
         </form>
     </div>
@@ -58,18 +58,18 @@
         <tbody>
         <tr>
             <td>admin</td>
-            <td>admin</td>
+            <td>123456</td>
             <td>All privileges, allow visit [Mobile] and [Unity] resources</td>
         </tr>
         <tr>
             <td>unity</td>
-            <td>unity</td>
+            <td>123456</td>
             <td>Only allow visit [Unity] resource, support grant_type:
                 <em>authorization_code,refresh_token,implicit</em></td>
         </tr>
         <tr>
             <td>mobile</td>
-            <td>mobile</td>
+            <td>123456</td>
             <td>Only allow visit [Mobile] resource, support grant_type: <em>password,refresh_token</em></td>
         </tr>
         </tbody>

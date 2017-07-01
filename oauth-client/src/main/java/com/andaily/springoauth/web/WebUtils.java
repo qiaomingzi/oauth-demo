@@ -36,7 +36,6 @@ public abstract class WebUtils {
             return false;
         }
         final ServletContext servletContext = request.getSession().getServletContext();
-        servletContext.getAttributeNames();
         final Object value = servletContext.getAttribute(state);
 
         if (value != null) {
